@@ -1,0 +1,113 @@
+.line-1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.line-2 {
+  -webkit-line-clamp: 2;
+}
+
+.line-3 {
+  -webkit-line-clamp: 3;
+}
+
+.line-4 {
+  -webkit-line-clamp: 4;
+}
+
+.line-5 {
+  -webkit-line-clamp: 5;
+}
+
+.line-2,
+.line-3,
+.line-4,
+.line-5 {
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+/* tailwindcss */
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.grow-0 {
+  flex-grow: 0;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.select-none {
+  user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
