@@ -19,10 +19,10 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
-    "archiver": "^6.0.1",
     "postcss-px-to-viewport": "^1.1.1",
     "sass": "^1.66.1",
     "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.1.4"
+    "vite": "^4.1.4",
+    "vite-plugin-zip-pack": "^1.0.6"
   }
 }
