@@ -11,19 +11,31 @@ const instance = axios.create({
   baseURL: VITE_BASE_API,
   withCredentials: true,
   timeout: 5000,
+  custom: {
+    loading: true,
+    toast: 0, // 0 code错误时提示，1 正确错误都提示，2 不提示
+  },
+  data: {},
+  params: {}
 });
+
+
+let count = 0;
 
 // request interceptor
 instance.interceptors.request.use(
   (config) => {
     config.data = config.data || {};
 
-    if (!config.hideLoading) {
+    if (config.custom.loading) {
+      count++;
       // loading
       showLoadingToast({
         forbidClick: true,
       });
     }
+
+    //增加token
 
     const contentType = config.headers?.['content-type'] || config.headers?.['Content-Type'];
 
@@ -49,17 +61,21 @@ instance.interceptors.request.use(
 // response interceptor
 instance.interceptors.response.use(
   (response) => {
-    closeToast(true);
-    const res = response.data;
+    clearLoading(response);
+    const { data, config, status } = response;
+    const { toast } = config.custom;
+    if (status !== 200) return Promise.reject(data.result || data.data);
     // if the custom code is not 200, it is judged as an error.
-    if (res.code !== 0) {
-      showToast(res.msg);
-      return Promise.reject(res.msg || 'Error');
-    } else {
-      return Promise.resolve(res.data);
+    if (data.code !== 0) {
+      if (toast != 2) showToast(data.msg);
+      return Promise.reject(data.msg || 'Error');
+    } else if (data.code === 0) {
+      if (toast == 1) showToast(data.msg);
+      return Promise.resolve(data.data);
     }
   },
   (error) => {
+    clearLoading(error);
     console.log('err' + error);
     showFailToast(error.message);
     return Promise.reject(error.message);
@@ -73,4 +89,21 @@ instance.interceptors.response.use(
 export default function useAxiosApi(url, config) {
   // return useAxios(url, config, instance);
   return instance({ url, ...config });
+}
+
+function clearLoading(response) {
+  if (response.config.custom.loading) {
+    //避免连续的请求造成加载框闪烁
+    setTimeout(() => {
+      count--;
+      if (count < 1) {
+        try {
+          //清除加载框
+          closeToast(true);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }, 200);
+  }
 }
